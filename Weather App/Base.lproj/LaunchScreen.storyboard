@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="lightforms" translatesAutoresizingMaskIntoConstraints="NO" id="GDP-5j-0DA">
-                                <rect key="frame" x="-234" y="-223" width="861" height="1299"/>
+                                <rect key="frame" x="-246" y="-17" width="885" height="886"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
