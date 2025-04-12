@@ -48,7 +48,6 @@ class DailyForecastTableViewCell: UITableViewCell {
         let imageView = UIImageView();
         
         imageView.translatesAutoresizingMaskIntoConstraints = false;
-        imageView.image = UIImage(named: "cloudIcon");
         imageView.contentMode = .scaleAspectFit;
         
         return imageView;
@@ -65,6 +64,7 @@ class DailyForecastTableViewCell: UITableViewCell {
         stackView.isLayoutMarginsRelativeArrangement = true;
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16);
         stackView.spacing = 15;
+        
         return stackView;
     }();
     
@@ -76,6 +76,14 @@ class DailyForecastTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func loadData(weekDay: String?, min: String?, max: String?, icon: UIImage?){
+        day.text = weekDay;
+        
+        minTemperatura.text = "min \(min ?? "")";
+        maxTemperatura.text = "max \(max ?? "")";
+        iconImageView.image = icon;
     }
     
     private func setupView(){
@@ -93,7 +101,8 @@ class DailyForecastTableViewCell: UITableViewCell {
     private func setConstraints(){
         stackView.setConstraintsToParent(contentView);
         NSLayoutConstraint.activate([
-            day.widthAnchor.constraint(lessThanOrEqualToConstant: 50)
+            day.widthAnchor.constraint(lessThanOrEqualToConstant: 50),
+            iconImageView.heightAnchor.constraint(equalToConstant: 30)
         ])
     };
 }

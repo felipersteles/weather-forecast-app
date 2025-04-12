@@ -6,25 +6,42 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		72F44DA22DAADCBE00340ED2 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 72F44DA12DAADCB700340ED2 /* .gitignore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
-		72CCD69B2DA9713E009AEE6A /* Weather App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		72CCD69B2DA9713E009AEE6A /* Weather App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "Weather App.app"; path = "/Users/felipeteles/Development/personal/Weather App/build/Debug-iphoneos/Weather App.app"; sourceTree = "<absolute>"; };
+		72F44DA12DAADCB700340ED2 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		72CCD6AD2DA97141009AEE6A /* Exceptions for "Weather App" folder in "Weather App" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				dev.xcconfig,
 				Info.plist,
 			);
 			target = 72CCD69A2DA9713E009AEE6A /* Weather App */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		72F44DA52DAADD3100340ED2 /* Exceptions for "Weather App" folder in "Compile Sources" phase from "Weather App" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 72CCD6972DA9713E009AEE6A /* Sources */;
+			membershipExceptions = (
+				dev.xcconfig,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		72CCD69D2DA9713E009AEE6A /* Weather App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				72CCD6AD2DA97141009AEE6A /* Exceptions for "Weather App" folder in "Weather App" target */,
+				72F44DA52DAADD3100340ED2 /* Exceptions for "Weather App" folder in "Compile Sources" phase from "Weather App" target */,
 			);
 			path = "Weather App";
 			sourceTree = "<group>";
@@ -46,16 +63,8 @@
 			isa = PBXGroup;
 			children = (
 				72CCD69D2DA9713E009AEE6A /* Weather App */,
-				72CCD69C2DA9713E009AEE6A /* Products */,
+				72F44DA12DAADCB700340ED2 /* .gitignore */,
 			);
-			sourceTree = "<group>";
-		};
-		72CCD69C2DA9713E009AEE6A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				72CCD69B2DA9713E009AEE6A /* Weather App.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -108,7 +117,7 @@
 			mainGroup = 72CCD6922DA9713E009AEE6A;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 72CCD69C2DA9713E009AEE6A /* Products */;
+			productRefGroup = 72CCD6922DA9713E009AEE6A;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -122,6 +131,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72F44DA22DAADCBE00340ED2 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

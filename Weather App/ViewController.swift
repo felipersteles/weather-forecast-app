@@ -14,7 +14,6 @@ class ViewController: UIViewController {
     private lazy var backgroundView: UIImageView = {
         
         let imageView = UIImageView(frame: .zero);
-        imageView.image = UIImage(named: "background");
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false;
         
@@ -38,7 +37,6 @@ class ViewController: UIViewController {
         
         label.translatesAutoresizingMaskIntoConstraints = false;
         label.font = .systemFont(ofSize: 20);
-        label.text = "São José de Ribamar";
         label.textAlignment = .center;
         label.textColor = UIColor(named: "primaryColor")
         
@@ -50,8 +48,7 @@ class ViewController: UIViewController {
         let label = UILabel();
         
         label.translatesAutoresizingMaskIntoConstraints = false;
-        label.font = .systemFont(ofSize: 70, weight: .bold);
-        label.text = "25ºC";
+        label.font = .systemFont(ofSize: 65, weight: .bold);
         label.textAlignment = .left;
         label.textColor = UIColor(named: "primaryColor")
         
@@ -61,7 +58,6 @@ class ViewController: UIViewController {
     private lazy var wheaterIcon: UIImageView = {
         let image = UIImageView();
         
-        image.image = UIImage(named: "sunIcon");
         image.contentMode = .scaleAspectFit
         image.translatesAutoresizingMaskIntoConstraints = false;
         
@@ -83,7 +79,6 @@ class ViewController: UIViewController {
         let label = UILabel();
         
         label.translatesAutoresizingMaskIntoConstraints = false;
-        label.text = "1000mm";
         label.font = UIFont.systemFont(ofSize: 12, weight: .semibold);
         label.textColor = UIColor(named: "contrastColor");
         
@@ -114,7 +109,6 @@ class ViewController: UIViewController {
         let label = UILabel();
         
         label.translatesAutoresizingMaskIntoConstraints = false;
-        label.text = "10km/h";
         label.font = UIFont.systemFont(ofSize: 12, weight: .semibold);
         label.textColor = UIColor(named: "contrastColor");
         
@@ -197,23 +191,56 @@ class ViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false;
         tableView.backgroundColor = .clear;
         tableView.dataSource = self;
+        tableView.delegate = self;
         tableView.register(DailyForecastTableViewCell.self, forCellReuseIdentifier: DailyForecastTableViewCell.identifier);
         tableView.separatorColor = .contrastColor;
         
         return tableView;
     }();
     
+    private let service = WeatherService();
+    private var city = City(lat: "-2.56318", long: "-44.0626", name: "São José de Ribamar");
+    private var forecastResponse: ForecastResponse?;
     
     // Executed once
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView();
+        fetchData();
+    }
+    
+    private func fetchData(){
+        service.fetchData(city: city, {[weak self] response in
+            self?.forecastResponse = response;
+            DispatchQueue.main.async{
+                self?.loadData()
+            }
+            
+        });
+    }
+    
+    private func loadData(){
+        cityLabel.text = city.name;
+        
+        temperatureLabel.text = "\(Int(forecastResponse?.current?.temp ?? 0))°C";
+        humidityValueLabel.text = "\(forecastResponse?.current?.humidity ?? 0)mm";
+        windValueLabel.text = "\(forecastResponse?.current?.windSpeed ?? 0)km/h";
+        wheaterIcon.image = UIImage(named: forecastResponse?.current?.weather.first?.icon ?? "");
+        
+        if forecastResponse?.current?.dt.isDayTime() ?? true {
+            backgroundView.image = UIImage(named: "background");
+        } else{
+            backgroundView.image = UIImage(named: "background-night");
+        }
+        
+        hourlyCollectionView.reloadData();
+        dailyForecastTableView.reloadData();
     }
     
     // Setup the view
     private func setupView(){
-        view.backgroundColor = UIColor.systemBlue;
+//        view.backgroundColor = UIColor.systemBlue;
 
         setHierarchy();
         setConstraints();
@@ -264,6 +291,7 @@ class ViewController: UIViewController {
             cityLabel.heightAnchor.constraint(equalToConstant: 20),
             temperatureLabel.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: 12),
             temperatureLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 25),
+            temperatureLabel.heightAnchor.constraint(equalToConstant: 70),
             wheaterIcon.heightAnchor.constraint(equalToConstant: 86),
             wheaterIcon.widthAnchor.constraint(equalToConstant: 86),
             wheaterIcon.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -25),
@@ -305,24 +333,48 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UICollectionViewDataSource, UITableViewDataSource{
+extension ViewController: UICollectionViewDataSource, UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return forecastResponse?.daily.count ?? 0;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: DailyForecastTableViewCell.identifier, for: indexPath);
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: DailyForecastTableViewCell.identifier, for: indexPath) as? DailyForecastTableViewCell else {
+            return UITableViewCell();
+        };
+        
+        let forecast = forecastResponse?.daily[indexPath.row];
+        
+        cell.loadData(
+            weekDay: forecast?.dt.toWeekdayName(),
+            min: forecast?.temp.min.toCelsius(),
+            max: forecast?.temp.max.toCelsius(),
+            icon: UIImage(named: forecast?.weather.first?.icon ?? "")
+        )
         
         return cell;
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        60
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10;
+        return forecastResponse?.hourly.count ?? 0;
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyForecastCollectionViewCell.indentifier, for: indexPath);
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyForecastCollectionViewCell.indentifier, for: indexPath) as? HourlyForecastCollectionViewCell else{
+            return UICollectionViewCell();
+        };
+        
+        let forecast = forecastResponse?.hourly[indexPath.row];
+        
+        cell.loadData(
+            time: forecast?.dt.toHourFormat(),
+            icon: UIImage(named: forecast?.weather.first?.icon ?? ""),
+            temp: forecast?.temp.toCelsius()
+        )
         
         return cell;
     }

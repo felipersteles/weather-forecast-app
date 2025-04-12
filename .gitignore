@@ -1,0 +1,77 @@
+//
+//  .gitignore
+//  Weather App
+//
+//  Created by Felipe Teles on 12/04/25.
+//
+
+# Xcode
+.DS_Store
+*/xcuserdata
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+*.xcscmblueprint
+
+# Build
+build/
+*.app
+*.framework
+*.xarchive
+
+# Swift Package Manager
+.swiftpm
+.build/
+Packages/
+*.xcodeproj
+
+# CocoaPods
+Pods/
+!Podfile
+!Podfile.lock
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# App-specific
+*.xcconfig
+.env
+.env.local
+
+# System files
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# SwiftLint
+.swiftlint.yml
+
+# Documentation
+docs/
+.docsettings
+
+# Playgrounds
+*.playground
+
+# Misc
+*.log
+*.backup
+*.orig
+*.rej
