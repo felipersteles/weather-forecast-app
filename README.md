@@ -1,5 +1,6 @@
 
 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgXedfexJqHQUot9YdQ8P4iJqB1N0vGOvnNDlvGGnTM9C9MfeQs6M_NCdgXZvJmf-6IKEzEZSYk0J1u_RFMX868-licdy1ashJ3LAdbAHcInmOWinSuIqToAVoynFirSYQk9zuO_M4lA5gK/s1600/vanitas.jpg" height="400" width="100%"/>
+
 # 🌦 Weather Forecast iOS App  
 
 A sleek, intuitive weather app built in **Swift** for iOS, delivering real-time forecasts, 5-day predictions, and dynamic weather visuals—my very first Swift project!
